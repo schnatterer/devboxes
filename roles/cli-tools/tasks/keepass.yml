@@ -1,0 +1,11 @@
+- name: Install keepass apt repo (Ubuntu)
+  become: yes
+  apt_repository:
+    repo: ppa:jtaylor/keepass
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install keepass (Ubuntu)
+  become: yes
+  apt:
+    name: keepass2
+  when: ansible_distribution == "Ubuntu"
