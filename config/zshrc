@@ -1,4 +1,19 @@
 # set -x
+
+# we use xterm as default,
+# but we use screen for tmux.
+# This is required to support home+end keys
+if [ -n "${TMUX}" ]; then
+    export TERM="screen-256color"
+else
+    export TERM="xterm-256color"
+fi
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="/snap/bin:${PATH}"
+
+
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
@@ -10,6 +25,16 @@ export ZSH=~/.oh-my-zsh
 #ZSH_THEME="powerlevel9k/powerlevel9k"
 #ZSH_THEME="bullet-train"
 ZSH_THEME=spaceship
+
+#powerlevel custom settings
+POWERLEVEL9K_MODE='awesome-fontconfig'
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+POWERLEVEL9K_OS_ICON_BACKGROUND="white"
+POWERLEVEL9K_OS_ICON_FOREGROUND="blue"
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S | %d.%m.%y}"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -53,20 +78,43 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( \
-  git git-flow-completion mvn wd \
-	zsh-completions zsh-syntax-highlighting zsh-autosuggestions \
-  vagrant make extract web-search docker \
-  z )
+plugins=(
+  git 
+  git-flow
+
+  mvn
+  gradle
+
+  #wd
+  z
+  editorconfig
+
+	#zsh-completions
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+
+  vagrant
+  extract
+  web-search
+
+  docker 
+  docker-compose
+  kubectl
+
+  # javascript
+  npm
+  yarn
+  gulp
+)
 
 # User configuration
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:~/programs/maven/bin:~/programs/terraform:~/programs/kubectx:~/programs/ksonnet:~/programs/kubeaudit:/usr/local/packer:~/programs/stern:~/programs:/snap/bin:${KREW_ROOT:-$HOME/.krew}/bin"
+export PATH="/snap/bin:${KREW_ROOT:-$HOME/.krew}/bin:${PATH}"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -74,6 +122,7 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -108,47 +157,27 @@ else
   echo "$AGENT_SOCK doesn't exist. Is gpg-agent running ?"
 fi
 
-explorer() {
-    nautilus --browser "$*"
-}
-
 # maven
-#export M2_HOME=~/programs/maven
-#export M2=$M2_HOME/bin
-#export PATH=$M2:$PATH 
 #export MAVEN_OPTS=-Xms256m -Xmx512m
 
-alias ..='cd ..'
-alias cd..='cd ..'
+#alias ..='cd ..'
+#alias cd..='cd ..'
 # A trailing space in VALUE causes the next word to be checked for alias substitution when the alias is expanded.
 alias watch='watch '
+alias yaml="bat --language='yaml'"
 
-alias k8s='kubectl'
 alias firefoxd='/opt/firefox_dev/firefox'
+alias "c=xclip"
+alias "v=xclip -o"
 
 idea() {
   /snap/intellij-idea-ultimate/current/bin/idea.sh "$*"&
 }
 
+explorer() {
+    nautilus --browser "$*"
+}
 
-export PATH=$PATH:~/programs/scripts
-
-alias "c=xclip"
-alias "v=xclip -o"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="~/.sdkman"
-[[ -s "~/.sdkman/bin/sdkman-init.sh" ]] && source "~/.sdkman/bin/sdkman-init.sh"
-
-#powerlevel custom settings
-POWERLEVEL9K_MODE='awesome-fontconfig'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-POWERLEVEL9K_OS_ICON_BACKGROUND="white"
-POWERLEVEL9K_OS_ICON_FOREGROUND="blue"
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S | %d.%m.%y}"
 source ~/.fonts/*.sh
 source ~/.kubectl_aliases
 #source <(gopass completion zsh)
@@ -156,10 +185,12 @@ source <(helm completion zsh)
 source <(kubectl completion zsh)
 source ~/.docker_aliases
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '~/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '~/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '~/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '~/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/usr/share/google-cloud-sdk/completion.zsh.inc' ]; then source '/usr/share/google-cloud-sdk/completion.zsh.inc'; fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH=$PATH:~/programs/scripts
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="~/.sdkman"
+[[ -s "~/.sdkman/bin/sdkman-init.sh" ]] && source "~/.sdkman/bin/sdkman-init.sh"
