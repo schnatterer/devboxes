@@ -84,6 +84,7 @@ plugins=(
 
   mvn
   gradle
+  java-env
 
   #wd
   z
@@ -170,8 +171,11 @@ alias firefoxd='/opt/firefox_dev/firefox'
 alias "c=xclip"
 alias "v=xclip -o"
 
+alias reg='docker run r.j3ss.co/reg'
+
+
 idea() {
-  /snap/intellij-idea-ultimate/current/bin/idea.sh "$*"&
+  /snap/intellij-idea-ultimate/current/bin/idea.sh "$*"&!
 }
 
 explorer() {
@@ -192,5 +196,5 @@ if [ -f '/usr/share/google-cloud-sdk/completion.zsh.inc' ]; then source '/usr/sh
 export PATH=$PATH:~/programs/scripts
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="~/.sdkman"
-[[ -s "~/.sdkman/bin/sdkman-init.sh" ]] && source "~/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR=~/.sdkman
+[[ -s ~/.sdkman/bin/sdkman-init.sh ]] && source ~/.sdkman/bin/sdkman-init.sh
