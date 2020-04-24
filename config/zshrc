@@ -26,6 +26,8 @@ export ZSH=~/.oh-my-zsh
 #ZSH_THEME="bullet-train"
 ZSH_THEME=spaceship
 
+SPACESHIP_TIME_SHOW=true
+
 #powerlevel custom settings
 POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs)
@@ -90,7 +92,7 @@ plugins=(
   z
   editorconfig
 
-	#zsh-completions
+  #zsh-completions
   zsh-syntax-highlighting
   zsh-autosuggestions
 
@@ -106,10 +108,14 @@ plugins=(
   npm
   yarn
   gulp
+
+  you-should-use
+  #forgit
+  fast-syntax-highlighting
 )
 
 # User configuration
-export PATH="/snap/bin:${KREW_ROOT:-$HOME/.krew}/bin:${PATH}"
+export PATH="/snap/bin:${KREW_ROOT:-$HOME/.krew}/bin:~/.local/bin:${PATH}"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -163,16 +169,21 @@ fi
 
 #alias ..='cd ..'
 #alias cd..='cd ..'
+
+command -v exa >/dev/null 2>&1 && alias ls=exa
 # A trailing space in VALUE causes the next word to be checked for alias substitution when the alias is expanded.
 alias watch='watch '
 alias yaml="bat --language='yaml'"
 
-alias firefoxd='/opt/firefox_dev/firefox'
 alias "c=xclip"
 alias "v=xclip -o"
 
-alias reg='docker run r.j3ss.co/reg'
-
+# cant use gcloud docker auth
+#alias reg='docker run --rm -v ${HOME}:/root r.j3ss.co/reg'
+alias terraform='drrmitv ${HOME}:${HOME} --network=host -u "$(id -u):$(id -g)" -w $(pwd) hashicorp/terraform:0.12.24'
+alias docker-image-sizes='docker run --rm -e DIS_IMPL schnatterer/docker-image-size'
+alias docker-image-size='docker run --rm --entrypoint docker-image-size-curl.sh schnatterer/docker-image-size'
+alias velero='docker run --rm -u $(id -u):$(id -g) -v ${HOME}:/home -eHOME=/home velero/velero'
 
 idea() {
   /snap/intellij-idea-ultimate/current/bin/idea.sh "$*"&!
@@ -183,15 +194,15 @@ explorer() {
 }
 
 source ~/.fonts/*.sh
-source ~/.kubectl_aliases
-#source <(gopass completion zsh)
-source <(helm completion zsh) 
-source <(kubectl completion zsh)
-source ~/.docker_aliases
+#command -v gopass >/dev/null 2>&1 &&  source <(gopass completion zsh)
+command -v helm >/dev/null 2>&1 && source <(helm completion zsh) 
+command -v kubectl >/dev/null 2>&1 && source <(kubectl completion zsh)
 
-if [ -f '/usr/share/google-cloud-sdk/completion.zsh.inc' ]; then source '/usr/share/google-cloud-sdk/completion.zsh.inc'; fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+[[ -f ~/.kubectl_fzf.plugin.zsh ]] && source ~/.kubectl_fzf.plugin.zsh
+[[ -f ~/.kubectl_aliases ]] && source ~/.kubectl_aliases
+[[ -f ~/.docker_aliases ]] && source ~/.docker_aliases
+[[ -f '/usr/share/google-cloud-sdk/completion.zsh.inc' ]] && source '/usr/share/google-cloud-sdk/completion.zsh.inc'
 
 # This speeds up pasting w/ autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238
@@ -206,8 +217,8 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
-
-export PATH=$PATH:~/programs/scripts
+export LD_PRELOAD="$HOME/Documents/git/stderred/build/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
+export DOCKER_BUILDKIT=1 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR=~/.sdkman
