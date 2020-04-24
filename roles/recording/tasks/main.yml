@@ -1,0 +1,26 @@
+- name: Check if npm is installed
+  shell: which npm
+  register: npm
+  failed_when: False
+  changed_when: False
+
+# beautiful gif terminal recording
+- name: Install terminalizer
+  become: yes
+  npm:
+    name: terminalizer
+    global: yes
+    unsafe_perm: yes
+  when: npm.rc == 0
+
+- name: Install recording tools (Arch)
+  include: arch.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Install recording tools (Ubuntu)
+  include: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install recording tools (MacOSX)
+  include: osx.yml
+  when: ansible_distribution == "MacOSX"

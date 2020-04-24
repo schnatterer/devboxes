@@ -1,18 +1,28 @@
-- name: Install code
+- name: Install vscode (Arch)
   become: yes
   snap:
     name: code
     classic: yes
     state: present
-  when: ansible_system == "Linux"
+  when: ansible_distribution == "Archlinux"
 
-- name: Remove deprecated vscode
+- name: Install vscode (Ubuntu)
+  become: yes
+  include: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- name: Remove deprecated vscode (Linux)
   become: yes
   snap:
     name: vscode
     classic: yes
     state: absent
   when: ansible_system == "Linux"
+
+- name: Install vscode (MacOSX)
+  homebrew_cask:
+    name: visual-studio-code
+  when: ansible_distribution == "MacOSX"
 
 - name: install vscode extensions
   command: "code --install-extension '{{ item }}'"
@@ -22,7 +32,6 @@
   - EditorConfig.EditorConfig
   - dbaeumer.vscode-eslint
   - esbenp.prettier-vscode
-  - flowtype.flow-for-vscode
   - vscoss.vscode-ansible
   - k--kato.intellij-idea-keybindings
   - mauve.terraform
@@ -34,5 +43,3 @@
   - ms-vsliveshare.vsliveshare
   register: vscode_result
   changed_when: "'already installed' not in vscode_result.stdout"
-
-# todo install vscode on mac

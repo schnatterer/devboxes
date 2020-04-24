@@ -6,40 +6,33 @@
     - git
     - scm
     - vcs
-    - mac
   - role: zsh
     tags:
     - zsh
     - shell
-    - mac
   - role: tmux
     tags:
     - shell
     - tmux
-    - mac
   - role: vim
     tags:
     - shell
     - vim
-    - mac
   - role: gpg
     tags:
     - shell
     - gpg
     - gnupg
-    - mac
   - role: mercurial
     tags:
     - shell
     - mercurial
     - hg
-    - mac
   - role: cli-tools
     tags:
     - shell
     - tools
     - cli-tools
-    - mac
   - role: docker
     tags:
     - docker
@@ -52,13 +45,11 @@
     - ops
     - tools
     - packer
-    - mac
   - role: terraform
     tags:
     - ops
     - tools
     - terraform
-    - mac
   - role: virtualbox
     tags:
     - ops
@@ -71,7 +62,6 @@
     - ops
     - tools
     - vagrant
-    - mac
   - role: snap
     tags:
     - snap
@@ -85,7 +75,6 @@
     - dev
     - go
     - golang
-    - mac
   - role: node
     tags:
     - dev
@@ -93,10 +82,13 @@
     - nodejs
     - js
     - javascript
-    - mac
-  - role: gcloud
+  - role: k8s
     tags:
     - ops
+    - k8s
+    - kubernetes
+    - helm
+    - draft
     - gcloud
     - gke
   - role: vscode
@@ -107,3 +99,6 @@
     tags:
     - dev
     - idea
+  - role: recording
+    tags:
+    - recording

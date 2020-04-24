@@ -34,7 +34,7 @@
   when: ansible_distribution == "Ubuntu"
 
 - name: Install fzf (Ubuntu)
-  shell: ~/.fzf/install
+  shell: ~/.fzf/install --no-update-rc
   args:
     creates: ~/.fzf.zsh
   when: ansible_distribution == "Ubuntu"
@@ -72,6 +72,18 @@
     dest: ~/.oh-my-zsh
     update: no
 
+- name: Install zsh-autosuggestions
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    update: no
+
+- name: Install zsh-syntax-highlighting
+  git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    update: no
+
 - name: Install powerlevel9k theme
   git:
     repo: https://github.com/bhilburn/powerlevel9k
@@ -82,20 +94,14 @@
   file:
     path: "~/.oh-my-zsh/custom/plugins/{{ item }}"
     state: directory
-  with_items:
-  - editorconfig
-  - java-env
-  - vegeta
+  with_items: "{{ custom_omz_plugins }}"
 
 - name: Install custom oh-my-zsh plugins
   file:
     src: "{{ playbook_dir }}/config/oh-my-zsh-plugins/{{item}}.plugin.zsh"
     dest: "~/.oh-my-zsh/custom/plugins/{{ item }}/{{item}}.plugin.zsh"
     state: link
-  with_items:
-  - editorconfig
-  - java-env
-  - vegeta
+  with_items: "{{ custom_omz_plugins }}"
 
 - name: Install pywal (Linux)
   become: yes

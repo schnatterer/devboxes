@@ -1,9 +1,9 @@
 - name: Install gcloud (Ubuntu)
-  include: ubuntu.yml
+  include: gcloud_ubuntu.yml
   when: ansible_distribution == "Ubuntu"
 
 - name: Install gcloud (Arch)
-  include: arch.yml
+  include: gcloud_arch.yml
   when: ansible_distribution == "Archlinux"
 
 - name: Install kubectl
@@ -25,3 +25,15 @@
 
 - name: Install helm
   include: helm.yml
+
+- name: Install draft
+  include: draft.yml
+
+- name: Install kustomize
+  include: kustomize.yml
+
+- name: Install k9s
+  include: k9s.yml
+
+- name: Install velero
+  include: velero.yml
