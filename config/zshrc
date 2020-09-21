@@ -11,7 +11,7 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH="/snap/bin:${PATH}"
+#export PATH="/snap/bin:$HOME/.local/bin:${PATH}"
 
 
 # Path to your oh-my-zsh installation.
@@ -71,7 +71,7 @@ COMPLETION_WAITING_DOTS="true"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -90,6 +90,7 @@ plugins=(
 
   #wd
   z
+  fzf
   editorconfig
 
   #zsh-completions
@@ -112,10 +113,12 @@ plugins=(
   you-should-use
   #forgit
   fast-syntax-highlighting
-)
+
+ )
 
 # User configuration
-export PATH="/snap/bin:${KREW_ROOT:-$HOME/.krew}/bin:~/.local/bin:${PATH}"
+export PATH="/snap/bin:${KREW_ROOT:-$HOME/.krew}/bin:${HOME}/.local/bin:${PATH}:${HOME}/go/bin/:${HOME}/programs/android/bin/:${HOME}/Android/Sdk/platform-tools/:${HOME}/.linuxbrew/bin"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -173,6 +176,7 @@ fi
 command -v exa >/dev/null 2>&1 && alias ls=exa
 # A trailing space in VALUE causes the next word to be checked for alias substitution when the alias is expanded.
 alias watch='watch '
+alias bat='batcat'
 alias yaml="bat --language='yaml'"
 
 alias "c=xclip"
@@ -183,7 +187,12 @@ alias "v=xclip -o"
 alias terraform='drrmitv ${HOME}:${HOME} --network=host -u "$(id -u):$(id -g)" -w $(pwd) hashicorp/terraform:0.12.24'
 alias docker-image-sizes='docker run --rm -e DIS_IMPL schnatterer/docker-image-size'
 alias docker-image-size='docker run --rm --entrypoint docker-image-size-curl.sh schnatterer/docker-image-size'
-alias velero='docker run --rm -u $(id -u):$(id -g) -v ${HOME}:/home -eHOME=/home velero/velero'
+#alias velero='docker run --rm -u $(id -u):$(id -g) -v ${HOME}:/home -eHOME=/home velero/velero'
+
+function kgpoyaml() {
+  kgpo -oyaml|yaml
+}
+
 
 idea() {
   /snap/intellij-idea-ultimate/current/bin/idea.sh "$*"&!
@@ -197,8 +206,18 @@ source ~/.fonts/*.sh
 #command -v gopass >/dev/null 2>&1 &&  source <(gopass completion zsh)
 command -v helm >/dev/null 2>&1 && source <(helm completion zsh) 
 command -v kubectl >/dev/null 2>&1 && source <(kubectl completion zsh)
+command -v k3d >/dev/null 2>&1 && source <(k3d completion zsh)
 
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+
+
+#[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh # now use oh-my-zsh plugin
 [[ -f ~/.kubectl_fzf.plugin.zsh ]] && source ~/.kubectl_fzf.plugin.zsh
 [[ -f ~/.kubectl_aliases ]] && source ~/.kubectl_aliases
 [[ -f ~/.docker_aliases ]] && source ~/.docker_aliases
@@ -218,8 +237,22 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 export LD_PRELOAD="$HOME/Documents/git/stderred/build/libstderred.so${LD_PRELOAD:+:$LD_PRELOAD}"
-export DOCKER_BUILDKIT=1 
+# Too many builds failed with build kit, as of 07/2020
+#export DOCKER_BUILDKIT=1 
+
+# Histsize: If set too far up in this file this seems to be overwritten!
+# Default SAVEHIST seems to be 10,000 in Ubuntu
+# Keep in mind that the whole thing is kept in memory!
+export HISTSIZE=10000000
+export SAVEHIST=${HISTSIZE}
+# Avoid storing duplicate entries in history to save some space
+setopt hist_ignore_all_dups
+
+export ANDROID_HOME=~/Android/Sdk
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR=~/.sdkman
 [[ -s ~/.sdkman/bin/sdkman-init.sh ]] && source ~/.sdkman/bin/sdkman-init.sh
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
