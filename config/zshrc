@@ -1,5 +1,9 @@
 # set -x
 
+if [[ ! $(tmux list-sessions) ]]; then 
+  tmux
+fi
+
 # we use xterm as default,
 # but we use screen for tmux.
 # This is required to support home+end keys
@@ -28,6 +32,7 @@ export ZSH=~/.oh-my-zsh
 ZSH_THEME=spaceship
 #ZSH_THEME=simple
 SIMPLE_PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+#ZSH_TMUX_AUTOSTART=true
 
 function simplePrompt() {
   export PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
@@ -143,7 +148,8 @@ plugins=(
   you-should-use
   #forgit
   fast-syntax-highlighting
-
+  
+  tmux
  )
 
 setup_asciinema
