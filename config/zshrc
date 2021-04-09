@@ -156,6 +156,7 @@ plugins=(
   fast-syntax-highlighting
   
   tmux
+  terraform
  )
 
 setup_asciinema
