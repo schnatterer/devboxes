@@ -266,6 +266,9 @@ source ~/.fonts/*.sh
 command -v helm >/dev/null 2>&1 && source <(helm completion zsh) 
 command -v kubectl >/dev/null 2>&1 && source <(kubectl completion zsh)
 command -v k3d >/dev/null 2>&1 && source <(k3d completion zsh)
+command -v kubecolor >/dev/null 2>&1 && alias kubectl="kubecolor"
+# make completion work with kubecolor
+compdef kubecolor=kubectl
 
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
