@@ -25,14 +25,8 @@
     - curl
     - subversion
     - jq
-    - diff-so-fancy
     - ncdu
   when: ansible_distribution == "Archlinux"
-
-- name: Install gotop tap (MacOSX)
-  homebrew_tap:
-    name: cjbassi/gotop
-  when: ansible_distribution == "MacOSX"
 
 - name: Install cli tools from repository (MacOSX)
   homebrew:
@@ -45,26 +39,16 @@
     - curl
     - subversion
     - jq
-    - bat
     - gotop
     - ctop
     - cfssl
     - gopass
     - vegeta
-    - diff-so-fancy
     - ncdu
   when: ansible_distribution == "MacOSX"
 
-- name: Install diff-so-fancy (Ubuntu)
-  become: yes
-  get_url:
-    url: https://raw.githubusercontent.com/so-fancy/diff-so-fancy/master/third_party/build_fatpack/diff-so-fancy
-    dest: /usr/local/bin/diff-so-fancy
-    mode: 0755
-
 - name: Install bat
   include: bat.yml
-  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Archlinux"
 
 - name: Install gotop
   include: gotop.yml
@@ -85,3 +69,6 @@
 - name: Install vegeta
   include: vegeta.yml
   when: ansible_distribution == "Ubuntu" or ansible_distribution == "Archlinux"
+
+- name: Install aliases
+  include: aliases.yml

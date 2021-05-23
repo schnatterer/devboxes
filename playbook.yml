@@ -102,3 +102,15 @@
   - role: recording
     tags:
     - recording
+  - role: trivy
+    tags:
+    - trivy
+  - role: backup
+    tags:
+    - backup
+    - restic
+  - role: hid_apple
+    tags:
+    - apple
+    - keyboard
+    - hid_apple
