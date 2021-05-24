@@ -259,7 +259,7 @@ explorer() {
     nautilus --browser "$*"
 }
 
-source ~/.fonts/*.sh
+#source ~/.fonts/*.sh
 #command -v gopass >/dev/null 2>&1 &&  source <(gopass completion zsh)
 command -v helm >/dev/null 2>&1 && source <(helm completion zsh) 
 command -v kubectl >/dev/null 2>&1 && source <(kubectl completion zsh)

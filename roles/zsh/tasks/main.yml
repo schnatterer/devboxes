@@ -79,6 +79,18 @@
     dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
     update: no
 
+- name: Install zsh-you-should-use
+  git:
+    repo: https://github.com/MichaelAquilina/zsh-you-should-use
+    dest: ~/.oh-my-zsh/custom/plugins/you-should-use
+    update: no
+
+- name: Install zsh-fast-syntax-highlighting
+  git:
+    repo: https://github.com/zdharma/fast-syntax-highlighting
+    dest: ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting
+    update: no
+
 - name: Install zsh-syntax-highlighting
   git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
@@ -91,6 +103,18 @@
     dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
     update: no
 
+- name: Install spaceship prompt/theme
+  git:
+    repo: https://github.com/denysdovhan/spaceship-prompt
+    dest: ~/.oh-my-zsh/custom/themes/spaceship-prompt
+    update: no
+
+- name: Create symlink for spaceship prompt
+  file:
+    src: ~/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme
+    dest: ~/.oh-my-zsh/custom/themes/spaceship.zsh-theme
+    state: link
+    
 - name: create custom oh-my-zsh plugin directories
   file:
     path: "~/.oh-my-zsh/custom/plugins/{{ item }}"
