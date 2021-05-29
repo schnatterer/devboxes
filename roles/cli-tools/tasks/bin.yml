@@ -1,0 +1,38 @@
+- name: Capture bin version
+  shell:  bin -v | grep bin | awk '{print $3}'
+  register: actual_bin_version
+  changed_when: False
+
+- name: Download bin
+  get_url:
+    url: https://github.com/marcosnils/bin/releases/download/v{{ bin_base_version }}/bin_{{ bin_base_version }}_Linux_x86_64
+    dest: /tmp/bin
+    mode: 0770
+  when: not actual_bin_version.stdout or actual_bin_version.stdout is version(bin_base_version, '<')
+
+- name: Check bin config exists
+  stat:
+    path: $HOME/.config/bin/config.json
+  register: bin_config_file
+
+- name: Create bin config folder
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - $HOME/.config/bin/
+    - $HOME/.local/bin/
+
+- name: Create bin config file
+  template:
+    src: "{{ playbook_dir }}/config/bin-config.json.j2"
+    dest: $HOME/.config/bin/config.json
+    mode: 0660
+  when: not bin_config_file.stat.exists
+
+- name: Self manage bin
+  shell: /tmp/bin list | grep github.com/marcosnils/bin || /tmp/bin install github.com/marcosnils/bin
+  when: not actual_bin_version.stdout or actual_bin_version.stdout is version(bin_base_version, '<')
+
+- name: Update all binaries managed by bin
+  shell: yes | $HOME/.local/bin/bin update

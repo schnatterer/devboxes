@@ -32,6 +32,7 @@
   register: machine
   changed_when: False
 
+# Does not work well with bin 0.7.0  because you'll have to choose interactively which file from the tar to install
 - name: Install docker-compose
   become: yes
   get_url:

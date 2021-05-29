@@ -1,3 +1,4 @@
+# Does not work well with bin 0.7.0  because you'll have to choose interactively which file from the tar to install
 - name: capture installed velero version
   shell: velero version --client-only | grep 'Version' | awk -F':' '{print $NF}' | sed -e 's/^\s*v//g'
   register: velero

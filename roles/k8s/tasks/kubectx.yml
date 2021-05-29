@@ -1,3 +1,4 @@
+# Does not work well with bin 0.7.0 because it would only install kubectx, not kubens
 - name: Clone kubectx repository
   become: yes
   git:

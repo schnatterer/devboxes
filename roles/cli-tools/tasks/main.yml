@@ -47,6 +47,9 @@
     - ncdu
   when: ansible_distribution == "MacOSX"
 
+- name: Install bin
+  include: bin.yml
+  
 - name: Install bat
   include: bat.yml
 

@@ -1,4 +1,3 @@
-gotop_version: 4.1.1
-ctop_version: 0.7.5
-vegeta_version: 12.8.4
 docker_aliases_version: 0.4.0
+# Version here does not matter too much, because we later manage bin by itself
+bin_base_version: 0.7.0

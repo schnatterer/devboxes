@@ -1,12 +1,4 @@
-- name: Capture gotop version
-  shell: gotop --version || echo unknown
-  register: gotop
-  changed_when: False
-
-- name: Install gotop (Arch)
-  become: yes
-  unarchive:
-    src: https://github.com/xxxserxxx/gotop/releases/download/v{{ gotop_version }}/gotop_v{{ gotop_version }}_linux_amd64.tgz
-    dest: /usr/local/bin
-    remote_src: yes
-  when: gotop.stdout != gotop_version and ansible_system == "Linux"
+- name: Install gotop
+  shell: $HOME/.local/bin/bin list | grep {{ item }} || $HOME/.local/bin/bin install {{ item }}
+  with_items:
+    - github.com/xxxserxxx/gotop
