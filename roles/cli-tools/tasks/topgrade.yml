@@ -1,0 +1,19 @@
+- name: Install topgrade (Arch)
+  become: yes
+  pacman:
+    name: topgrade
+  when: ansible_distribution == "Archlinux"
+
+- name: Capture topgrade version (Ubuntu)
+  shell: topgrade --version | awk '{print $2}'
+  register: actual_topgrade_version
+  changed_when: False
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install topgrade (Ubuntu)
+  become: yes
+  unarchive:
+    src: https://github.com/r-darwish/topgrade/releases/download/v{{ topgrade_base_version }}/topgrade-v{{ topgrade_base_version }}-x86_64-unknown-linux-gnu.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+  when: ansible_distribution == "Ubuntu" and (not actual_topgrade_version.stdout or actual_topgrade_version.stdout is version(topgrade_base_version, '<'))

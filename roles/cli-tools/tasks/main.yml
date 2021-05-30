@@ -45,6 +45,7 @@
     - gopass
     - vegeta
     - ncdu
+    - topgrade
   when: ansible_distribution == "MacOSX"
 
 - name: Install bin
@@ -71,6 +72,10 @@
 
 - name: Install vegeta
   include: vegeta.yml
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Archlinux"
+
+- name: Install topgrade
+  include: topgrade.yml
   when: ansible_distribution == "Ubuntu" or ansible_distribution == "Archlinux"
 
 - name: Install aliases
