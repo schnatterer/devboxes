@@ -1,3 +1,9 @@
 # Disable specific steps - same options as the command line flag
 # Gcloud fails to upgrade because it was installed via package manager
 disable = ["gcloud"]
+
+[git]
+# Additional git repositories to pull
+repos = [
+    "~/.tfenv",
+]

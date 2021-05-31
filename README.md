@@ -12,7 +12,7 @@ The playbook will install and configure the following tools:
 * vagrant
 * virtual box
 * packer
-* terraform
+* terraform via [tfenv](https://github.com/tfutils/tfenv)
 * gcloud, kubectl and kubectx
 * gpg
 * git

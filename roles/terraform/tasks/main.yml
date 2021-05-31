@@ -1,8 +1,8 @@
-- name: Install terraform (Linux)
-  include: linux.yml
-  when: ansible_system == "Linux"
+- name: Install tfenv
+  git:
+    repo: https://github.com/tfutils/tfenv.git
+    dest: ~/.tfenv
+    update: no
 
-- name: Install terraform (MacOSX)
-  homebrew:
-    name: terraform
-  when: ansible_distribution == "MacOSX"
+- name: Install latest terraform
+  shell: ~/.tfenv/bin/tfenv install
