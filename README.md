@@ -22,12 +22,15 @@ The playbook will install and configure the following tools:
 * golang
 * vscode
 * Intellij
-* bin and topgrade for upgrading tools
+* bin, pipx and topgrade for installing and upgrading everything. 
+  Hints:
+    * Run `topgrade` to upgrade everything regularly. 
+    * Use `pipx` to install python-base apps. Other than `pip`, apps installed using `pipx` are also upgraded using topgrade.
 * and many more
 
 ## Supported Operating Systems
 
-* Ubuntu (tested on 19.04)
+* Ubuntu (tested on 20.04)
 * Manjaro Linux
 * Mac OS X
 

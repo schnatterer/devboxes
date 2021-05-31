@@ -50,6 +50,9 @@
 
 - name: Install bin
   include: bin.yml
+
+- name: Install python based tools
+  include: python-based.yml
   
 - name: Install bat
   include: bat.yml

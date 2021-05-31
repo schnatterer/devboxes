@@ -1,0 +1,48 @@
+- name: Install pipx dependencies dependencies (Arch)
+  become: yes
+  pacman:
+    name:
+      - python3-venv 
+  when: ansible_distribution == "Archlinux"
+
+- name: Install pipx dependencies dependencies (Ubuntu)
+  become: yes
+  apt:
+    name:
+      - python3-venv
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install pipx dependencies dependencies (MacOSX)
+  homebrew:
+    name:
+      - python3-venv 
+  when: ansible_distribution == "MacOSX"
+
+- name: Capture pipx version
+  shell: pipx --version || true
+  register: pipx_version
+  changed_when: False
+      
+- name: Install pipx
+  pip:
+    name: pipx
+  when: not pipx_version.stdout
+
+# Allows for upgrading using topgrade
+- name: "Self-manage pipx, part one: Overwrite symlink of pip's pipx version"
+  shell: pipx install pipx --force
+  when: not pipx_version.stdout
+
+- name: "Self-manage pipx, part two: Get rid of pip's pipx version"
+  # This deletes pipx' own symlink unfortunately
+  shell: pip uninstall pipx -y
+  when: not pipx_version.stdout
+
+- name: "Self-manage pipx, part three: Bring pipx symlink back" 
+  shell: $HOME/.local/pipx/venvs/pipx/bin/pipx install pipx --force
+  when: not pipx_version.stdout
+  
+- name: Install python-based tools
+  shell: pipx install "{{ item }}" || true
+  with_items:
+    - yq # Note: https://github.com/kislyuk/yq, not https://github.com/mikefarah/yq, because it (used to be?) too different from jq
