@@ -36,8 +36,14 @@ jobs:
           EOF
 
       - name: Initial smoke test
+        env:
+          # Avoid hitting rate limit for bin
+          # https://github.com/marcosnils/bin/tree/74bf#i-used-bin-and-i-got-rate-limited-by-github-what-can-i-do
+          GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./devbox -e ansible_become_pass=''
 
       # Make sure the playbook also succeeds on incremental run
       - name: Incremental smoke test
+        env:
+          GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./devbox -e ansible_become_pass=''
