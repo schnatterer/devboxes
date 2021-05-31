@@ -17,3 +17,9 @@
     dest: /usr/local/bin
     remote_src: yes
   when: ansible_distribution == "Ubuntu" and (not actual_topgrade_version.stdout or actual_topgrade_version.stdout is version(topgrade_base_version, '<'))
+
+- name: Configure topgrade
+  copy:
+    src: "{{ playbook_dir }}/config/topgrade.toml"
+    dest: $HOME/.config/
+    mode: 0644

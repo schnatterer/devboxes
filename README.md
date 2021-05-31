@@ -22,6 +22,7 @@ The playbook will install and configure the following tools:
 * golang
 * vscode
 * Intellij
+* bin and topgrade for upgrading tools
 * and many more
 
 ## Supported Operating Systems
