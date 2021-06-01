@@ -127,7 +127,6 @@ plugins=(
 
   mvn
   gradle
-  java-env
 
   #wd
   z

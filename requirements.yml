@@ -1,0 +1,3 @@
+- name: Comcast.sdkman
+  src:  https://github.com/Comcast/ansible-sdkman/
+  version: 1.7.0

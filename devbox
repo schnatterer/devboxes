@@ -35,6 +35,8 @@ fi
 echo "starting ansible ..."
 echo "===================="
 
+ansible-galaxy install -r "${BASEDIR}/requirements.yml"
+
 # If you pass "-e ansible_become_pass=<your sudo password" it will not ask for the password.
 # This is discouraged and only for testing purposes
 ansible-playbook \

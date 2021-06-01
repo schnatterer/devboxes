@@ -1,34 +1,12 @@
-- name: Install java and maven (Arch)
-  become: yes
-  pacman:
-    name:
-    - jdk8-openjdk
-    - jdk11-openjdk
-    - maven
-  when: ansible_distribution == "Archlinux"
-
-- name: Install java and maven (Ubuntu)
-  become: yes
-  apt:
-    name:
-    - openjdk-11-jdk
-    - openjdk-11-source
-    - openjdk-8-jdk
-    - openjdk-8-source
-    - maven
-  when: ansible_distribution == "Ubuntu"
-
-- name: Install java and maven (MacOSX)
-  include: osx.yml
-  when: ansible_distribution == "MacOSX"
-
-- name: Create java-env plugin directory
-  file:
-    path: ~/.oh-my-zsh/custom/plugins/java-env
-    state: directory
-
-- name: Link java-env plugin
-  file:
-    src: "{{ playbook_dir }}/config/oh-my-zsh-plugins/java-env.plugin.zsh"
-    dest: ~/.oh-my-zsh/custom/plugins/java-env/java-env.plugin.zsh
-    state: link
+# We could query latest java 8 or 11 if necessary, like this.
+# curl https://api.sdkman.io/2/candidates/java/linuxx64/versions/list?current=&installed= | grep hs-adpt | grep 11. | head -n1 | awk '{print $8}'
+# Or we just install latest. Which might be enough. We can still install more JDKs later, if necessary.
+- name: Install latest sdkman, java, groovy, gradle, maven
+  include_role:
+    name: Comcast.sdkman
+  vars: 
+      sdkman_install_packages:
+        - { candidate: maven }
+        - { candidate: gradle }
+        - { candidate: groovy }
+        - { candidate: java }

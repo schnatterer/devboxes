@@ -17,7 +17,7 @@ The playbook will install and configure the following tools:
 * gpg
 * git
 * mercurial
-* java and maven
+* java, groovy, maven, gradle via [sdkman](https://sdkman.io/)
 * node.js
 * golang
 * vscode
