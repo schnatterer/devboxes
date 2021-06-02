@@ -1,0 +1,27 @@
+# Only linux. For Mac brew is a prerequisite
+# Check existence, in case linuxbrew has been installed manually (not via git clone)
+- name: Check Brew exists
+  stat:
+    path: /home/linuxbrew/.linuxbrew
+  register: linuxbrew_folder
+  
+- name: Install brew
+  become: yes
+  git:
+    repo: https://github.com/Homebrew/brew
+    dest: /home/linuxbrew/.linuxbrew
+    update: no
+  when: (not linuxbrew_folder.stat.exists) and (ansible_distribution == "Ubuntu" or ansible_distribution == "Archlinux")
+
+- name: Change brew folder permissions
+  become: yes
+  file:
+    path: /home/linuxbrew/.linuxbrew
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    recurse: yes
+  when: (not linuxbrew_folder.stat.exists) and (ansible_distribution == "Ubuntu" or ansible_distribution == "Archlinux")
+
+- name: Brew update
+  shell: /home/linuxbrew/.linuxbrew/bin/brew update
+  when: (not linuxbrew_folder.stat.exists) and (ansible_distribution == "Ubuntu" or ansible_distribution == "Archlinux")
