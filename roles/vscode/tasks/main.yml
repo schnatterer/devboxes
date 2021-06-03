@@ -24,7 +24,7 @@
   - EditorConfig.EditorConfig
   - dbaeumer.vscode-eslint
   - esbenp.prettier-vscode
-  - vscoss.vscode-ansible
+  - zbr.vscode-ansible
   - k--kato.intellij-idea-keybindings
   - marcostazi.vs-code-vagrantfile
   - jebbs.plantuml
