@@ -1,3 +1,6 @@
+# Do not use role from git here, because the roles are installed before git.
+# If roles from git should ever be required, they could be installed via an ansible task (executed after the git role!)
+# like so:
+# - shell: ansible-galaxy install git+https...
 - name: Comcast.sdkman
-  src:  https://github.com/Comcast/ansible-sdkman/
   version: 1.7.0
