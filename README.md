@@ -105,7 +105,12 @@ Use it only for testing and development!
 
 Its also possible to only apply certain tags, e.g.
 
-`devbox --tags zsh`
+```shell
+# exclusive tag
+devbox --tags zsh
+# excluded tag
+devbox --skip-tags zsh
+```
 
 See [playbook](playbook.yml) for existing tags.
 
