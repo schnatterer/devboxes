@@ -30,7 +30,7 @@
 
 # Allows for upgrading using topgrade
 - name: "Self-manage pipx, part one: Overwrite symlink of pip's pipx version"
-  shell: pipx install pipx --force
+  shell: $HOME/.local/bin/pipx install pipx --force
   when: not pipx_version.stdout
 
 - name: "Self-manage pipx, part two: Get rid of pip's pipx version"
@@ -43,6 +43,6 @@
   when: not pipx_version.stdout
   
 - name: Install python-based tools
-  shell: pipx install "{{ item }}" || true
+  shell: $HOME/.local/pipx/venvs/pipx/bin/pipx install "{{ item }}" || true
   with_items:
     - yq # Note: https://github.com/kislyuk/yq, not https://github.com/mikefarah/yq, because it (used to be?) too different from jq
