@@ -42,14 +42,6 @@
     creates: ~/.fzf.zsh
   when: ansible_distribution == "Ubuntu"
 
-- name: Link zsh configuration
-  file:
-    src: "{{ playbook_dir }}/config/{{ item }}"
-    dest: ~/.{{ item }}
-    state: link
-  with_items:
-  - zshrc
-
 - name: Find path of zsh
   shell: which zsh
   register: whichzsh

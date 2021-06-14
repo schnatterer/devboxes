@@ -13,6 +13,10 @@
     tags:
     - zsh
     - shell
+  - role: dotfiles
+    tags:
+    - dotfiles
+    - shell
   - role: tmux
     tags:
     - shell

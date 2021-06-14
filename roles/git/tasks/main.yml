@@ -39,10 +39,5 @@
     path: /usr/local/bin/diff-so-fancy
   register: diffsofancy
 
-- name: Render git configuration
-  template:
-    src: "{{ playbook_dir }}/config/gitconfig.j2"
-    dest: ~/.gitconfig
-    mode: 0600
-
+# Note that gitconfig is written in dotfiles
 

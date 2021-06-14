@@ -32,11 +32,3 @@
     repo: https://github.com/arcticicestudio/nord-vim
     dest: ~/.vim_runtime/my_plugins/nord-vim
     update: no
-
-- name: Link vimrc configuration
-  file:
-    src: "{{ playbook_dir }}/config/{{ item }}"
-    dest: ~/.{{ item }}
-    state: link
-  with_items:
-  - vimrc

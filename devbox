@@ -18,11 +18,15 @@ if [ ! -f "${BASEDIR}/vars.yml" ]; then
 
   echo -n "gpg key: "
   read GPG_KEY
+  
+  echo -n "dotfiles repo (e.g. https://github.com/schnatterer/dotfiles/):"
+  read DOTFILES_REPO
 
   cat > "${BASEDIR}/vars.yml" <<EOF
 mail: ${MAIL}
 displayName: ${DISPLAY_NAME}
 gpgKey: "${GPG_KEY}"
+dotfilesRepo: ${DOTFILES_REPO}
 EOF
 fi
 

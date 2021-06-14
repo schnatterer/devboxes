@@ -1,0 +1,16 @@
+- name: Install dotfiles repo
+  git:
+    repo: "{{ dotfilesRepo }}"
+    dest: ~/.dotfiles
+    update: no
+
+# This leads to dotfiles "bootstrap" script running non-interactively
+- name: Render git configuration
+  template:
+    src: "{{ playbook_dir }}/config/gitconfig.j2"
+    dest: ~/.dotfiles/git/gitconfig.local.symlink
+    mode: 0600
+
+- name: Bootstrap dotfiles
+  # B as in "Backup all"
+  shell: echo B | ~/.dotfiles/script/bootstrap

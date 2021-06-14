@@ -6,6 +6,7 @@ It will also install my set of configuration for those tools.
 The playbook will install and configure the following tools:
 
 * zsh (configured with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh))
+* modularized zshrc config via a dotfiles repo (e.g. [schnatterer/dotfiles](https://github.com/schnatterer/dotfiles/), inspired by [holman](https://github.com/holman/dotfiles))
 * tmux (inspired from [.tmux](https://github.com/gpakosz/.tmux))
 * vim (configured with [vimrc](https://github.com/amix/vimrc))
 * docker
@@ -18,7 +19,7 @@ The playbook will install and configure the following tools:
 * git
 * mercurial
 * java, groovy, maven, gradle via [sdkman](https://sdkman.io/)
-* node.js
+* node.js via [nvm](https://github.com/nvm-sh/nvm)
 * golang
 * vscode
 * Intellij
