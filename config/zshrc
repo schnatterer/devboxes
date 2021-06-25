@@ -35,7 +35,7 @@ export ZSH=~/.oh-my-zsh
 #ZSH_THEME="agnoster"
 #ZSH_THEME="powerlevel9k/powerlevel9k"
 #ZSH_THEME="bullet-train"
-ZSH_THEME=spaceship
+[[ -f "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme" ]] && ZSH_THEME="spaceship" || ZSH_THEME="robbyrussell"
 #ZSH_THEME=simple
 SIMPLE_PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 #ZSH_TMUX_AUTOSTART=true
@@ -68,6 +68,7 @@ function setup_asciinema() {
 
 
 SPACESHIP_TIME_SHOW=true
+SPACESHIP_KUBECTL_SHOW=true
 
 #powerlevel custom settings
 POWERLEVEL9K_MODE='awesome-fontconfig'
@@ -99,7 +100,7 @@ POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S | %d.%m.%y}"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+#ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -122,7 +123,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git 
+  git
   git-flow
 
   mvn
@@ -130,12 +131,8 @@ plugins=(
 
   #wd
   z
-  fzf
-  editorconfig
 
   #zsh-completions
-  zsh-syntax-highlighting
-  zsh-autosuggestions
 
   vagrant
   extract
@@ -150,13 +147,26 @@ plugins=(
   yarn
   gulp
 
-  you-should-use
   #forgit
-  fast-syntax-highlighting
   
-  tmux
   terraform
  )
+
+# 3rd party omz plugins
+optionalPlugins=(
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  you-should-use
+  fast-syntax-highlighting
+  editorconfig
+)
+for plugin in "${optionalPlugins[@]}"
+do
+  [[ -d "$HOME/.oh-my-zsh/custom/plugins/${plugin}" ]] && plugins+=("${plugin}")
+done
+
+command -v fzf >/dev/null 2>&1 && plugins+=("fzf")
+command -v tmux >/dev/null 2>&1 && plugins+=("tmux")
 
 setup_asciinema
 
