@@ -74,7 +74,7 @@ docker run -v $(pwd):/home/dev/devboxes \
     -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
     -v /lib/modules:/lib/modules:ro \
    --name devbox \
-    devboxes
+    ghcr.io/schnatterer/devboxes
 
 #login with: dev / box
 devboxes/devbox -e ansible_become_pass='box' 
