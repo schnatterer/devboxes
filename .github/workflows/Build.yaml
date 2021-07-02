@@ -38,6 +38,7 @@ jobs:
           mail: some@o.ne
           displayName: Some one
           gpgKey: "abcdef"
+          dotfilesRepo: https://github.com/schnatterer/dotfiles/
           EOF
 
       - name: Initial smoke test

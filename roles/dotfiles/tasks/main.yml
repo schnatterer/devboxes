@@ -1,16 +1,17 @@
-- name: Install dotfiles repo
+- name: Install dotfiles loader
   git:
-    repo: "{{ dotfilesRepo }}"
-    dest: ~/.dotfiles
+    repo: https://github.com/schnatterer/dotfiles-loader
+    dest: ~/.dotfiles-loader
     update: no
+
 
 # This leads to dotfiles "bootstrap" script running non-interactively
 - name: Render git configuration
   template:
     src: "{{ playbook_dir }}/config/gitconfig.j2"
-    dest: ~/.dotfiles/git/gitconfig.local.symlink
+    dest: ~/.dotfiles-loader/git/gitconfig.local
     mode: 0600
 
 - name: Bootstrap dotfiles
   # B as in "Backup all"
-  shell: echo B | ~/.dotfiles/script/bootstrap
+  shell: echo B | dotfiles_repo="{{ dotfilesRepo }}" ~/.dotfiles-loader/script/bootstrap
